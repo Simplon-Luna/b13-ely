@@ -21,5 +21,6 @@ module "azure_infra" {
   nginx_ingress_ip_name   = "${var.prefix}-IngressIp"
   nginx_ingress_ip_sku    = "Standard"
   route_table_name        = "customRouteTableName"
+  nic_name                = "ely-nic"
   vm_name                 = "ely13-vm"
 }
