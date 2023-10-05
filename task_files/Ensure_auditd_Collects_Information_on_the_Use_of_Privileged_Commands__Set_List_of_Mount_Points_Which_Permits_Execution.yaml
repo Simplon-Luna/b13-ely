@@ -1,0 +1,32 @@
+- name: Ensure auditd Collects Information on the Use of Privileged Commands - Set List of Mount Points Which Permits Execution
+    of Privileged Commands
+  ansible.builtin.set_fact:
+    privileged_mount_points: '{{(ansible_facts.mounts | rejectattr(''options'', ''search'', ''noexec|nosuid'') | rejectattr(''mount'',
+      ''match'', ''/proc($|/.*$)'') | map(attribute=''mount'') | list ) }}'
+  when:
+  - audit_rules_privileged_commands | bool
+  - configure_strategy | bool
+  - low_complexity | bool
+  - low_disruption | bool
+  - medium_severity | bool
+  - no_reboot_needed | bool
+  - '"audit" in ansible_facts.packages'
+  - ansible_virtualization_type not in ["docker", "lxc", "openvz", "podman", "container"]
+  tags:
+  - CCE-80724-8
+  - CJIS-5.4.1.1
+  - NIST-800-171-3.1.7
+  - NIST-800-53-AC-2(4)
+  - NIST-800-53-AC-6(9)
+  - NIST-800-53-AU-12(c)
+  - NIST-800-53-AU-2(d)
+  - NIST-800-53-CM-6(a)
+  - PCI-DSS-Req-10.2.2
+  - PCI-DSSv4-10.2.1.2
+  - audit_rules_privileged_commands
+  - configure_strategy
+  - low_complexity
+  - low_disruption
+  - medium_severity
+  - no_reboot_needed
+

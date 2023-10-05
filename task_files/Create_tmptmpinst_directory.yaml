@@ -1,0 +1,25 @@
+- name: Create /tmp/tmp-inst directory
+  file:
+    path: /tmp/tmp-inst
+    state: directory
+    mode: '000'
+    seuser: system_u
+    serole: object_r
+    setype: tmp_t
+  when:
+  - accounts_polyinstantiated_tmp | bool
+  - low_complexity | bool
+  - low_disruption | bool
+  - low_severity | bool
+  - no_reboot_needed | bool
+  - restrict_strategy | bool
+  - not ( lookup("env", "container") == "bwrap-osbuild" )
+  tags:
+  - CCE-83732-8
+  - accounts_polyinstantiated_tmp
+  - low_complexity
+  - low_disruption
+  - low_severity
+  - no_reboot_needed
+  - restrict_strategy
+

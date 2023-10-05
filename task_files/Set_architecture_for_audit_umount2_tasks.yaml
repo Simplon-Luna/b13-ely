@@ -1,0 +1,23 @@
+- name: Set architecture for audit umount2 tasks
+  set_fact:
+    audit_arch: b64
+  when:
+  - audit_rules_dac_modification_umount2 | bool
+  - low_complexity | bool
+  - low_disruption | bool
+  - medium_severity | bool
+  - reboot_required | bool
+  - restrict_strategy | bool
+  - '"audit" in ansible_facts.packages'
+  - ansible_virtualization_type not in ["docker", "lxc", "openvz", "podman", "container"]
+  - ansible_architecture == "aarch64" or ansible_architecture == "ppc64" or ansible_architecture == "ppc64le" or ansible_architecture
+    == "s390x" or ansible_architecture == "x86_64"
+  tags:
+  - CCE-90776-6
+  - audit_rules_dac_modification_umount2
+  - low_complexity
+  - low_disruption
+  - medium_severity
+  - reboot_required
+  - restrict_strategy
+

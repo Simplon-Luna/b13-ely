@@ -1,0 +1,24 @@
+- name: Ensure sysctl net.ipv4.conf.all.shared_media is set
+  sysctl:
+    name: net.ipv4.conf.all.shared_media
+    value: '{{ sysctl_net_ipv4_conf_all_shared_media_value }}'
+    sysctl_file: /etc/sysctl.conf
+    state: present
+    reload: true
+  when:
+  - disable_strategy | bool
+  - low_complexity | bool
+  - medium_disruption | bool
+  - medium_severity | bool
+  - reboot_required | bool
+  - sysctl_net_ipv4_conf_all_shared_media | bool
+  - ansible_virtualization_type not in ["docker", "lxc", "openvz", "podman", "container"]
+  tags:
+  - CCE-88333-0
+  - disable_strategy
+  - low_complexity
+  - medium_disruption
+  - medium_severity
+  - reboot_required
+  - sysctl_net_ipv4_conf_all_shared_media
+

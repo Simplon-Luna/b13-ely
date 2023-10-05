@@ -1,0 +1,22 @@
+- name: 'Add nosuid Option to /var: Check information associated to mountpoint'
+  command: findmnt --fstab '/var'
+  register: device_name
+  failed_when: device_name.rc > 1
+  changed_when: false
+  when:
+  - configure_strategy | bool
+  - high_disruption | bool
+  - low_complexity | bool
+  - mount_option_var_nosuid | bool
+  - no_reboot_needed | bool
+  - unknown_severity | bool
+  - ansible_virtualization_type not in ["docker", "lxc", "openvz", "podman", "container"]
+  tags:
+  - CCE-83383-0
+  - configure_strategy
+  - high_disruption
+  - low_complexity
+  - mount_option_var_nosuid
+  - no_reboot_needed
+  - unknown_severity
+

@@ -1,0 +1,23 @@
+- name: Enable authselect - Informative message based on the authselect integrity check
+  ansible.builtin.assert:
+    that:
+    - result_altered_authselect is skipped or result_altered_authselect.rc == 0
+    fail_msg:
+    - Files in the 'pam' package have been altered, so the authselect configuration won't be forced.
+  tags:
+  - CCE-88248-0
+  - NIST-800-53-AC-3
+  - configure_strategy
+  - enable_authselect
+  - low_complexity
+  - medium_disruption
+  - medium_severity
+  - no_reboot_needed
+  when:
+  - configure_strategy | bool
+  - enable_authselect | bool
+  - low_complexity | bool
+  - medium_disruption | bool
+  - medium_severity | bool
+  - no_reboot_needed | bool
+

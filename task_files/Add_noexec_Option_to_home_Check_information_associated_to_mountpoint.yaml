@@ -1,0 +1,25 @@
+- name: 'Add noexec Option to /home: Check information associated to mountpoint'
+  command: findmnt --fstab '/home'
+  register: device_name
+  failed_when: device_name.rc > 1
+  changed_when: false
+  when:
+  - DISA_STIG_RHEL_08_010590 | bool
+  - configure_strategy | bool
+  - high_disruption | bool
+  - low_complexity | bool
+  - medium_severity | bool
+  - mount_option_home_noexec | bool
+  - no_reboot_needed | bool
+  - ansible_virtualization_type not in ["docker", "lxc", "openvz", "podman", "container"]
+  tags:
+  - CCE-83328-5
+  - DISA-STIG-RHEL-08-010590
+  - NIST-800-53-CM-6(b)
+  - configure_strategy
+  - high_disruption
+  - low_complexity
+  - medium_severity
+  - mount_option_home_noexec
+  - no_reboot_needed
+

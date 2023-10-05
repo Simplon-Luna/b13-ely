@@ -1,0 +1,23 @@
+- name: Gather the package facts
+  package_facts:
+    manager: auto
+  tags:
+  - CCE-82873-1
+  - NIST-800-53-AU-8(1)(a)
+  - NIST-800-53-CM-6(a)
+  - PCI-DSS-Req-10.4.3
+  - PCI-DSSv4-10.6.2
+  - chronyd_specify_remote_server
+  - configure_strategy
+  - low_complexity
+  - low_disruption
+  - medium_severity
+  - no_reboot_needed
+  when:
+  - chronyd_specify_remote_server | bool
+  - configure_strategy | bool
+  - low_complexity | bool
+  - low_disruption | bool
+  - medium_severity | bool
+  - no_reboot_needed | bool
+

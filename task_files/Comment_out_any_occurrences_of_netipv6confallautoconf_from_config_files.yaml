@@ -1,0 +1,23 @@
+- name: Comment out any occurrences of net.ipv6.conf.all.autoconf from config files
+  replace:
+    path: '{{ item.path }}'
+    regexp: ^[\s]*net.ipv6.conf.all.autoconf
+    replace: '#net.ipv6.conf.all.autoconf'
+  loop: '{{ find_sysctl_d.files }}'
+  when:
+  - disable_strategy | bool
+  - low_complexity | bool
+  - medium_disruption | bool
+  - reboot_required | bool
+  - sysctl_net_ipv6_conf_all_autoconf | bool
+  - unknown_severity | bool
+  - ansible_virtualization_type not in ["docker", "lxc", "openvz", "podman", "container"]
+  tags:
+  - CCE-84266-6
+  - disable_strategy
+  - low_complexity
+  - medium_disruption
+  - reboot_required
+  - sysctl_net_ipv6_conf_all_autoconf
+  - unknown_severity
+

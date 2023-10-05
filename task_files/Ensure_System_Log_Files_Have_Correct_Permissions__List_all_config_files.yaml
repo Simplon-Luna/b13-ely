@@ -1,0 +1,33 @@
+- name: Ensure System Log Files Have Correct Permissions - List all config files
+  ansible.builtin.find:
+    paths: '{{ item | dirname }}'
+    patterns: '{{ item | basename }}'
+    hidden: false
+    follow: true
+  loop: '{{ include_config_output | list + [rsyslog_etc_config] }}'
+  register: rsyslog_config_files
+  failed_when: false
+  changed_when: false
+  when:
+  - configure_strategy | bool
+  - low_complexity | bool
+  - medium_disruption | bool
+  - medium_severity | bool
+  - no_reboot_needed | bool
+  - rsyslog_files_permissions | bool
+  - ansible_virtualization_type not in ["docker", "lxc", "openvz", "podman", "container"]
+  tags:
+  - CCE-80862-6
+  - NIST-800-53-AC-6(1)
+  - NIST-800-53-CM-6(a)
+  - PCI-DSS-Req-10.5.1
+  - PCI-DSS-Req-10.5.2
+  - PCI-DSSv4-10.3.1
+  - PCI-DSSv4-10.3.2
+  - configure_strategy
+  - low_complexity
+  - medium_disruption
+  - medium_severity
+  - no_reboot_needed
+  - rsyslog_files_permissions
+

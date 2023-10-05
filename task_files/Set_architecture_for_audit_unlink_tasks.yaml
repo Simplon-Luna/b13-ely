@@ -1,0 +1,31 @@
+- name: Set architecture for audit unlink tasks
+  set_fact:
+    audit_arch: b64
+  when:
+  - DISA_STIG_RHEL_08_030361 | bool
+  - audit_rules_file_deletion_events_unlink | bool
+  - low_complexity | bool
+  - low_disruption | bool
+  - medium_severity | bool
+  - reboot_required | bool
+  - restrict_strategy | bool
+  - '"audit" in ansible_facts.packages'
+  - ansible_virtualization_type not in ["docker", "lxc", "openvz", "podman", "container"]
+  - ansible_architecture == "aarch64" or ansible_architecture == "ppc64" or ansible_architecture == "ppc64le" or ansible_architecture
+    == "s390x" or ansible_architecture == "x86_64"
+  tags:
+  - CCE-80706-5
+  - DISA-STIG-RHEL-08-030361
+  - NIST-800-171-3.1.7
+  - NIST-800-53-AU-12(c)
+  - NIST-800-53-AU-2(d)
+  - NIST-800-53-CM-6(a)
+  - PCI-DSS-Req-10.2.7
+  - PCI-DSSv4-10.2.1.7
+  - audit_rules_file_deletion_events_unlink
+  - low_complexity
+  - low_disruption
+  - medium_severity
+  - reboot_required
+  - restrict_strategy
+

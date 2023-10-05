@@ -1,0 +1,22 @@
+- name: 'Add noexec Option to /boot: Check information associated to mountpoint'
+  command: findmnt --fstab '/boot'
+  register: device_name
+  failed_when: device_name.rc > 1
+  changed_when: false
+  when:
+  - configure_strategy | bool
+  - high_disruption | bool
+  - low_complexity | bool
+  - medium_severity | bool
+  - mount_option_boot_noexec | bool
+  - no_reboot_needed | bool
+  - ansible_virtualization_type not in ["docker", "lxc", "openvz", "podman", "container"]
+  tags:
+  - CCE-83316-0
+  - configure_strategy
+  - high_disruption
+  - low_complexity
+  - medium_severity
+  - mount_option_boot_noexec
+  - no_reboot_needed
+

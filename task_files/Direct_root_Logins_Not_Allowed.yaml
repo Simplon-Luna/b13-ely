@@ -1,0 +1,26 @@
+- name: Direct root Logins Not Allowed
+  copy:
+    dest: /etc/securetty
+    content: ''
+  when:
+  - low_complexity | bool
+  - low_disruption | bool
+  - medium_severity | bool
+  - no_direct_root_logins | bool
+  - no_reboot_needed | bool
+  - restrict_strategy | bool
+  - ansible_virtualization_type not in ["docker", "lxc", "openvz", "podman", "container"]
+  tags:
+  - CCE-80840-2
+  - NIST-800-171-3.1.1
+  - NIST-800-171-3.1.6
+  - NIST-800-53-CM-6(a)
+  - NIST-800-53-IA-2
+  - PCI-DSSv4-8.6.1
+  - low_complexity
+  - low_disruption
+  - medium_severity
+  - no_direct_root_logins
+  - no_reboot_needed
+  - restrict_strategy
+

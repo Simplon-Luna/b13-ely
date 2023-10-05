@@ -1,0 +1,22 @@
+- name: Ensure ignore_dot is enabled in /etc/sudoers
+  lineinfile:
+    path: /etc/sudoers
+    regexp: ^[\s]*Defaults.*\bignore_dot\b.*$
+    line: Defaults ignore_dot
+    validate: /usr/sbin/visudo -cf %s
+  tags:
+  - CCE-83810-2
+  - low_complexity
+  - low_disruption
+  - medium_severity
+  - no_reboot_needed
+  - restrict_strategy
+  - sudo_add_ignore_dot
+  when:
+  - low_complexity | bool
+  - low_disruption | bool
+  - medium_severity | bool
+  - no_reboot_needed | bool
+  - restrict_strategy | bool
+  - sudo_add_ignore_dot | bool
+

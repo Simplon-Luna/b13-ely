@@ -1,0 +1,23 @@
+- name: Update grub defaults and the bootloader menu
+  command: /sbin/grubby --update-kernel=ALL --args="slub_debug={{ var_slub_debug_options }}"
+  when:
+  - DISA_STIG_RHEL_08_010423 | bool
+  - grub2_slub_debug_argument | bool
+  - low_disruption | bool
+  - medium_complexity | bool
+  - medium_severity | bool
+  - reboot_required | bool
+  - restrict_strategy | bool
+  - ansible_virtualization_type not in ["docker", "lxc", "openvz", "podman", "container"]
+  - '"grub2-common" in ansible_facts.packages'
+  tags:
+  - CCE-80945-9
+  - DISA-STIG-RHEL-08-010423
+  - NIST-800-53-CM-6(a)
+  - grub2_slub_debug_argument
+  - low_disruption
+  - medium_complexity
+  - medium_severity
+  - reboot_required
+  - restrict_strategy
+

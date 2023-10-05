@@ -1,0 +1,22 @@
+- name: Ensure telnet is removed
+  package:
+    name: telnet
+    state: absent
+  tags:
+  - CCE-80849-3
+  - NIST-800-171-3.1.13
+  - PCI-DSSv4-2.2.4
+  - disable_strategy
+  - low_complexity
+  - low_disruption
+  - low_severity
+  - no_reboot_needed
+  - package_telnet_removed
+  when:
+  - disable_strategy | bool
+  - low_complexity | bool
+  - low_disruption | bool
+  - low_severity | bool
+  - no_reboot_needed | bool
+  - package_telnet_removed | bool
+

@@ -1,0 +1,26 @@
+- name: Comment out any occurrences of kernel.perf_event_paranoid from config files
+  replace:
+    path: '{{ item.path }}'
+    regexp: ^[\s]*kernel.perf_event_paranoid
+    replace: '#kernel.perf_event_paranoid'
+  loop: '{{ find_sysctl_d.files }}'
+  when:
+  - DISA_STIG_RHEL_08_010376 | bool
+  - disable_strategy | bool
+  - low_complexity | bool
+  - low_severity | bool
+  - medium_disruption | bool
+  - reboot_required | bool
+  - sysctl_kernel_perf_event_paranoid | bool
+  - ansible_virtualization_type not in ["docker", "lxc", "openvz", "podman", "container"]
+  tags:
+  - CCE-81054-9
+  - DISA-STIG-RHEL-08-010376
+  - NIST-800-53-AC-6
+  - disable_strategy
+  - low_complexity
+  - low_severity
+  - medium_disruption
+  - reboot_required
+  - sysctl_kernel_perf_event_paranoid
+

@@ -1,0 +1,21 @@
+- name: Ensure talk is removed
+  package:
+    name: talk
+    state: absent
+  tags:
+  - CCE-80848-5
+  - PCI-DSSv4-2.2.4
+  - disable_strategy
+  - low_complexity
+  - low_disruption
+  - medium_severity
+  - no_reboot_needed
+  - package_talk_removed
+  when:
+  - disable_strategy | bool
+  - low_complexity | bool
+  - low_disruption | bool
+  - medium_severity | bool
+  - no_reboot_needed | bool
+  - package_talk_removed | bool
+

@@ -1,0 +1,27 @@
+- name: Ensure Log Files Are Owned By Appropriate User - Sum all log files found
+  ansible.builtin.set_fact:
+    log_files: '{{ log_files_new.results | map(attribute=''stdout_lines'') | list | flatten | unique + log_files_old.results
+      | map(attribute=''stdout_lines'') | list | flatten | unique }}'
+  when:
+  - configure_strategy | bool
+  - low_complexity | bool
+  - medium_disruption | bool
+  - medium_severity | bool
+  - no_reboot_needed | bool
+  - rsyslog_files_ownership | bool
+  - ansible_virtualization_type not in ["docker", "lxc", "openvz", "podman", "container"]
+  tags:
+  - CCE-80861-8
+  - NIST-800-53-AC-6(1)
+  - NIST-800-53-CM-6(a)
+  - PCI-DSS-Req-10.5.1
+  - PCI-DSS-Req-10.5.2
+  - PCI-DSSv4-10.3.1
+  - PCI-DSSv4-10.3.2
+  - configure_strategy
+  - low_complexity
+  - medium_disruption
+  - medium_severity
+  - no_reboot_needed
+  - rsyslog_files_ownership
+

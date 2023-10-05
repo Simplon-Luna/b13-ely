@@ -1,0 +1,23 @@
+- name: 'Add noexec Option to /var: Check information associated to mountpoint'
+  command: findmnt --fstab '/var'
+  register: device_name
+  failed_when: device_name.rc > 1
+  changed_when: false
+  when:
+  - configure_strategy | bool
+  - high_disruption | bool
+  - low_complexity | bool
+  - medium_severity | bool
+  - mount_option_var_noexec | bool
+  - no_reboot_needed | bool
+  - ( ansible_virtualization_type not in ["docker", "lxc", "openvz", "podman", "container"] and "/var" in ansible_mounts |
+    map(attribute="mount") | list )
+  tags:
+  - CCE-83330-1
+  - configure_strategy
+  - high_disruption
+  - low_complexity
+  - medium_severity
+  - mount_option_var_noexec
+  - no_reboot_needed
+

@@ -1,0 +1,26 @@
+- name: Ensure ypserv is removed
+  package:
+    name: ypserv
+    state: absent
+  tags:
+  - CCE-82432-6
+  - NIST-800-53-CM-6(a)
+  - NIST-800-53-CM-7(a)
+  - NIST-800-53-CM-7(b)
+  - NIST-800-53-IA-5(1)(c)
+  - PCI-DSS-Req-2.2.2
+  - PCI-DSSv4-2.2.4
+  - disable_strategy
+  - high_severity
+  - low_complexity
+  - low_disruption
+  - no_reboot_needed
+  - package_ypserv_removed
+  when:
+  - disable_strategy | bool
+  - high_severity | bool
+  - low_complexity | bool
+  - low_disruption | bool
+  - no_reboot_needed | bool
+  - package_ypserv_removed | bool
+

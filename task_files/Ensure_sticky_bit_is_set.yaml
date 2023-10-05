@@ -1,0 +1,26 @@
+- name: Ensure sticky bit is set
+  file:
+    path: '{{ item }}'
+    mode: a+t
+  with_items:
+  - '{{ dir_output.stdout_lines }}'
+  tags:
+  - CCE-80783-4
+  - DISA-STIG-RHEL-08-010190
+  - NIST-800-53-AC-6(1)
+  - NIST-800-53-CM-6(a)
+  - dir_perms_world_writable_sticky_bits
+  - low_complexity
+  - low_disruption
+  - medium_severity
+  - no_reboot_needed
+  - restrict_strategy
+  when:
+  - DISA_STIG_RHEL_08_010190 | bool
+  - dir_perms_world_writable_sticky_bits | bool
+  - low_complexity | bool
+  - low_disruption | bool
+  - medium_severity | bool
+  - no_reboot_needed | bool
+  - restrict_strategy | bool
+

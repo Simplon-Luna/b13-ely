@@ -1,0 +1,22 @@
+- name: Ensure python3-libsemanage installed
+  package:
+    name: python3-libsemanage
+    state: present
+  when:
+  - enable_strategy | bool
+  - low_complexity | bool
+  - low_disruption | bool
+  - medium_severity | bool
+  - no_reboot_needed | bool
+  - sebool_polyinstantiation_enabled | bool
+  - ansible_virtualization_type not in ["docker", "lxc", "openvz", "podman", "container"]
+  - not ( lookup("env", "container") == "bwrap-osbuild" )
+  tags:
+  - CCE-84230-2
+  - enable_strategy
+  - low_complexity
+  - low_disruption
+  - medium_severity
+  - no_reboot_needed
+  - sebool_polyinstantiation_enabled
+

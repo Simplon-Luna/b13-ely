@@ -1,0 +1,26 @@
+- name: 'Configure TLS for rsyslog remote logging: Add missing rsyslog directive'
+  ansible.builtin.lineinfile:
+    dest: /etc/rsyslog.conf
+    line: action(type="omfwd" protocol="tcp" Target="{{ rsyslog_remote_loghost_address }}" port="6514" StreamDriver="gtls"
+      StreamDriverMode="1" StreamDriverAuthMode="x509/name" streamdriver.CheckExtendedKeyPurpose="on")
+    create: true
+  when:
+  - configure_strategy | bool
+  - low_complexity | bool
+  - low_disruption | bool
+  - medium_severity | bool
+  - no_reboot_needed | bool
+  - rsyslog_remote_tls | bool
+  - ansible_virtualization_type not in ["docker", "lxc", "openvz", "podman", "container"]
+  - not rsyslog_includes_with_directive.matched and not rsyslog_main_file_with_directive.matched
+  tags:
+  - CCE-82457-3
+  - NIST-800-53-AU-9(3)
+  - NIST-800-53-CM-6(a)
+  - configure_strategy
+  - low_complexity
+  - low_disruption
+  - medium_severity
+  - no_reboot_needed
+  - rsyslog_remote_tls
+

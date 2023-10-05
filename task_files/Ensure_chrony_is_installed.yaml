@@ -1,0 +1,23 @@
+- name: Ensure chrony is installed
+  package:
+    name: chrony
+    state: present
+  when:
+  - enable_strategy | bool
+  - low_complexity | bool
+  - low_disruption | bool
+  - medium_severity | bool
+  - no_reboot_needed | bool
+  - package_chrony_installed | bool
+  - ansible_virtualization_type not in ["docker", "lxc", "openvz", "podman", "container"]
+  tags:
+  - CCE-82874-9
+  - PCI-DSS-Req-10.4
+  - PCI-DSSv4-10.6.1
+  - enable_strategy
+  - low_complexity
+  - low_disruption
+  - medium_severity
+  - no_reboot_needed
+  - package_chrony_installed
+

@@ -1,0 +1,25 @@
+- name: 'Configure TLS for rsyslog remote logging: search for omfwd action directive in rsyslog main config file'
+  ansible.builtin.find:
+    paths: /etc
+    pattern: rsyslog.conf
+    contains: ^\s*action\s*\(\s*type\s*=\s*"omfwd".*
+  register: rsyslog_main_file_with_directive
+  when:
+  - configure_strategy | bool
+  - low_complexity | bool
+  - low_disruption | bool
+  - medium_severity | bool
+  - no_reboot_needed | bool
+  - rsyslog_remote_tls | bool
+  - ansible_virtualization_type not in ["docker", "lxc", "openvz", "podman", "container"]
+  tags:
+  - CCE-82457-3
+  - NIST-800-53-AU-9(3)
+  - NIST-800-53-CM-6(a)
+  - configure_strategy
+  - low_complexity
+  - low_disruption
+  - medium_severity
+  - no_reboot_needed
+  - rsyslog_remote_tls
+

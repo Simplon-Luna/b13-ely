@@ -1,0 +1,25 @@
+- name: Ensure use_pty is enabled in /etc/sudoers
+  lineinfile:
+    path: /etc/sudoers
+    regexp: ^[\s]*Defaults.*\buse_pty\b.*$
+    line: Defaults use_pty
+    validate: /usr/sbin/visudo -cf %s
+  when:
+  - low_complexity | bool
+  - low_disruption | bool
+  - medium_severity | bool
+  - no_reboot_needed | bool
+  - restrict_strategy | bool
+  - sudo_add_use_pty | bool
+  - '"sudo" in ansible_facts.packages'
+  tags:
+  - CCE-83798-9
+  - PCI-DSS-Req-10.2.5
+  - PCI-DSSv4-10.2.1.5
+  - low_complexity
+  - low_disruption
+  - medium_severity
+  - no_reboot_needed
+  - restrict_strategy
+  - sudo_add_use_pty
+

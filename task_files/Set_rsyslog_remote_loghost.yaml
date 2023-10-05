@@ -1,0 +1,28 @@
+- name: Set rsyslog remote loghost
+  lineinfile:
+    dest: /etc/rsyslog.conf
+    regexp: ^\*\.\*
+    line: '*.* @@{{ rsyslog_remote_loghost_address }}'
+    create: true
+  when:
+  - DISA_STIG_RHEL_08_030690 | bool
+  - low_complexity | bool
+  - low_disruption | bool
+  - medium_severity | bool
+  - no_reboot_needed | bool
+  - restrict_strategy | bool
+  - rsyslog_remote_loghost | bool
+  - ansible_virtualization_type not in ["docker", "lxc", "openvz", "podman", "container"]
+  tags:
+  - CCE-80863-4
+  - DISA-STIG-RHEL-08-030690
+  - NIST-800-53-AU-4(1)
+  - NIST-800-53-AU-9(2)
+  - NIST-800-53-CM-6(a)
+  - low_complexity
+  - low_disruption
+  - medium_severity
+  - no_reboot_needed
+  - restrict_strategy
+  - rsyslog_remote_loghost
+

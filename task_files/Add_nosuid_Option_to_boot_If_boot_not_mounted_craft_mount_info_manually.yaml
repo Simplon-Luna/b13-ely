@@ -1,0 +1,39 @@
+- name: 'Add nosuid Option to /boot: If /boot not mounted, craft mount_info manually'
+  set_fact:
+    mount_info: '{{ mount_info|default({})|combine({item.0: item.1}) }}'
+  with_together:
+  - - target
+    - source
+    - fstype
+    - options
+  - - /boot
+    - ''
+    - ''
+    - defaults
+  when:
+  - DISA_STIG_RHEL_08_010571 | bool
+  - configure_strategy | bool
+  - high_disruption | bool
+  - low_complexity | bool
+  - medium_severity | bool
+  - mount_option_boot_nosuid | bool
+  - no_reboot_needed | bool
+  - ansible_virtualization_type not in ["docker", "lxc", "openvz", "podman", "container"]
+  - ("--fstab" | length == 0)
+  - (device_name.stdout | length == 0)
+  tags:
+  - CCE-81033-3
+  - DISA-STIG-RHEL-08-010571
+  - NIST-800-53-AC-6
+  - NIST-800-53-AC-6(1)
+  - NIST-800-53-CM-6(a)
+  - NIST-800-53-CM-7(a)
+  - NIST-800-53-CM-7(b)
+  - NIST-800-53-MP-7
+  - configure_strategy
+  - high_disruption
+  - low_complexity
+  - medium_severity
+  - mount_option_boot_nosuid
+  - no_reboot_needed
+

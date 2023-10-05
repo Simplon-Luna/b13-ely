@@ -1,0 +1,24 @@
+- name: Make changes to /etc/security/namespace.conf
+  lineinfile:
+    path: /etc/security/namespace.conf
+    create: false
+    regexp: ^\s*/var/tmp\s+/var/tmp/tmp-inst/\s+level\s+root,adm$
+    line: /var/tmp /var/tmp/tmp-inst/    level      root,adm
+    state: present
+  when:
+  - accounts_polyinstantiated_var_tmp | bool
+  - low_complexity | bool
+  - low_disruption | bool
+  - low_severity | bool
+  - no_reboot_needed | bool
+  - restrict_strategy | bool
+  - not ( lookup("env", "container") == "bwrap-osbuild" )
+  tags:
+  - CCE-83778-1
+  - accounts_polyinstantiated_var_tmp
+  - low_complexity
+  - low_disruption
+  - low_severity
+  - no_reboot_needed
+  - restrict_strategy
+

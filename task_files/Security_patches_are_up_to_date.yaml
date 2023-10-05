@@ -1,0 +1,30 @@
+- name: Security patches are up to date
+  package:
+    name: '*'
+    state: latest
+  tags:
+  - CCE-80865-9
+  - CJIS-5.10.4.1
+  - DISA-STIG-RHEL-08-010010
+  - NIST-800-53-CM-6(a)
+  - NIST-800-53-SI-2(5)
+  - NIST-800-53-SI-2(c)
+  - PCI-DSS-Req-6.2
+  - PCI-DSSv4-6.3.3
+  - high_disruption
+  - low_complexity
+  - medium_severity
+  - patch_strategy
+  - reboot_required
+  - security_patches_up_to_date
+  - skip_ansible_lint
+  when:
+  - DISA_STIG_RHEL_08_010010 | bool
+  - high_disruption | bool
+  - low_complexity | bool
+  - medium_severity | bool
+  - patch_strategy | bool
+  - reboot_required | bool
+  - security_patches_up_to_date | bool
+  - skip_ansible_lint | bool
+

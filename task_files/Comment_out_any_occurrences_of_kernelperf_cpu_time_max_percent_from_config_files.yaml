@@ -1,0 +1,23 @@
+- name: Comment out any occurrences of kernel.perf_cpu_time_max_percent from config files
+  replace:
+    path: '{{ item.path }}'
+    regexp: ^[\s]*kernel.perf_cpu_time_max_percent
+    replace: '#kernel.perf_cpu_time_max_percent'
+  loop: '{{ find_sysctl_d.files }}'
+  when:
+  - disable_strategy | bool
+  - low_complexity | bool
+  - medium_disruption | bool
+  - medium_severity | bool
+  - reboot_required | bool
+  - sysctl_kernel_perf_cpu_time_max_percent | bool
+  - ansible_virtualization_type not in ["docker", "lxc", "openvz", "podman", "container"]
+  tags:
+  - CCE-83373-1
+  - disable_strategy
+  - low_complexity
+  - medium_disruption
+  - medium_severity
+  - reboot_required
+  - sysctl_kernel_perf_cpu_time_max_percent
+

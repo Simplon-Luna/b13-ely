@@ -1,0 +1,22 @@
+- name: Ensure env_reset is enabled in /etc/sudoers
+  lineinfile:
+    path: /etc/sudoers
+    regexp: ^[\s]*Defaults.*\benv_reset\b.*$
+    line: Defaults env_reset
+    validate: /usr/sbin/visudo -cf %s
+  tags:
+  - CCE-83820-1
+  - low_complexity
+  - low_disruption
+  - medium_severity
+  - no_reboot_needed
+  - restrict_strategy
+  - sudo_add_env_reset
+  when:
+  - low_complexity | bool
+  - low_disruption | bool
+  - medium_severity | bool
+  - no_reboot_needed | bool
+  - restrict_strategy | bool
+  - sudo_add_env_reset | bool
+

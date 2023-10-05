@@ -1,0 +1,22 @@
+- name: Check if newaliases command is available
+  ansible.builtin.stat:
+    path: /usr/bin/newaliases
+  register: result_newaliases_present
+  when:
+  - configure_strategy | bool
+  - low_complexity | bool
+  - low_disruption | bool
+  - medium_severity | bool
+  - no_reboot_needed | bool
+  - postfix_client_configure_mail_alias | bool
+  - ansible_virtualization_type not in ["docker", "lxc", "openvz", "podman", "container"]
+  tags:
+  - CCE-82381-5
+  - NIST-800-53-CM-6(a)
+  - configure_strategy
+  - low_complexity
+  - low_disruption
+  - medium_severity
+  - no_reboot_needed
+  - postfix_client_configure_mail_alias
+

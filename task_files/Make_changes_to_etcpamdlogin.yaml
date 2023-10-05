@@ -1,0 +1,24 @@
+- name: Make changes to /etc/pam.d/login
+  lineinfile:
+    path: /etc/pam.d/login
+    create: false
+    regexp: ^\s*session\s+required\s+pam_namespace.so\s*$
+    line: session    required     pam_namespace.so
+    state: present
+  when:
+  - enable_pam_namespace | bool
+  - low_complexity | bool
+  - low_disruption | bool
+  - low_severity | bool
+  - no_reboot_needed | bool
+  - restrict_strategy | bool
+  - ( not ( lookup("env", "container") == "bwrap-osbuild" ) and "pam" in ansible_facts.packages )
+  tags:
+  - CCE-83744-3
+  - enable_pam_namespace
+  - low_complexity
+  - low_disruption
+  - low_severity
+  - no_reboot_needed
+  - restrict_strategy
+

@@ -1,0 +1,20 @@
+- name: Ensure tftp is removed
+  package:
+    name: tftp
+    state: absent
+  tags:
+  - CCE-83590-0
+  - disable_strategy
+  - low_complexity
+  - low_disruption
+  - low_severity
+  - no_reboot_needed
+  - package_tftp_removed
+  when:
+  - disable_strategy | bool
+  - low_complexity | bool
+  - low_disruption | bool
+  - low_severity | bool
+  - no_reboot_needed | bool
+  - package_tftp_removed | bool
+

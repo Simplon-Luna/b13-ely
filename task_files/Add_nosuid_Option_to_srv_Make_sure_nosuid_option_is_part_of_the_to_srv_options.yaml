@@ -1,0 +1,22 @@
+- name: 'Add nosuid Option to /srv: Make sure nosuid option is part of the to /srv options'
+  set_fact:
+    mount_info: '{{ mount_info | combine( {''options'':''''~mount_info.options~'',nosuid'' }) }}'
+  when:
+  - configure_strategy | bool
+  - high_disruption | bool
+  - low_complexity | bool
+  - medium_severity | bool
+  - mount_option_srv_nosuid | bool
+  - no_reboot_needed | bool
+  - ( ansible_virtualization_type not in ["docker", "lxc", "openvz", "podman", "container"] and "/srv" in ansible_mounts |
+    map(attribute="mount") | list )
+  - mount_info is defined and "nosuid" not in mount_info.options
+  tags:
+  - CCE-83322-8
+  - configure_strategy
+  - high_disruption
+  - low_complexity
+  - medium_severity
+  - mount_option_srv_nosuid
+  - no_reboot_needed
+

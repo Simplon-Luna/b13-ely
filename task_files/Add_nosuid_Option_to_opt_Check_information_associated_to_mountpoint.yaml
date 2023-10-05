@@ -1,0 +1,23 @@
+- name: 'Add nosuid Option to /opt: Check information associated to mountpoint'
+  command: findmnt --fstab '/opt'
+  register: device_name
+  failed_when: device_name.rc > 1
+  changed_when: false
+  when:
+  - configure_strategy | bool
+  - high_disruption | bool
+  - low_complexity | bool
+  - medium_severity | bool
+  - mount_option_opt_nosuid | bool
+  - no_reboot_needed | bool
+  - ( ansible_virtualization_type not in ["docker", "lxc", "openvz", "podman", "container"] and "/opt" in ansible_mounts |
+    map(attribute="mount") | list )
+  tags:
+  - CCE-83319-4
+  - configure_strategy
+  - high_disruption
+  - low_complexity
+  - medium_severity
+  - mount_option_opt_nosuid
+  - no_reboot_needed
+

@@ -1,0 +1,32 @@
+- name: 'Add nosuid Option to /opt: If /opt not mounted, craft mount_info manually'
+  set_fact:
+    mount_info: '{{ mount_info|default({})|combine({item.0: item.1}) }}'
+  with_together:
+  - - target
+    - source
+    - fstype
+    - options
+  - - /opt
+    - ''
+    - ''
+    - defaults
+  when:
+  - configure_strategy | bool
+  - high_disruption | bool
+  - low_complexity | bool
+  - medium_severity | bool
+  - mount_option_opt_nosuid | bool
+  - no_reboot_needed | bool
+  - ( ansible_virtualization_type not in ["docker", "lxc", "openvz", "podman", "container"] and "/opt" in ansible_mounts |
+    map(attribute="mount") | list )
+  - ("--fstab" | length == 0)
+  - (device_name.stdout | length == 0)
+  tags:
+  - CCE-83319-4
+  - configure_strategy
+  - high_disruption
+  - low_complexity
+  - medium_severity
+  - mount_option_opt_nosuid
+  - no_reboot_needed
+

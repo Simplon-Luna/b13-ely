@@ -1,0 +1,31 @@
+- name: 'Add nosuid Option to /var/log: Check information associated to mountpoint'
+  command: findmnt --fstab '/var/log'
+  register: device_name
+  failed_when: device_name.rc > 1
+  changed_when: false
+  when:
+  - DISA_STIG_RHEL_08_040127 | bool
+  - configure_strategy | bool
+  - high_disruption | bool
+  - low_complexity | bool
+  - medium_severity | bool
+  - mount_option_var_log_nosuid | bool
+  - no_reboot_needed | bool
+  - ( ansible_virtualization_type not in ["docker", "lxc", "openvz", "podman", "container"] and "/var/log" in ansible_mounts
+    | map(attribute="mount") | list )
+  tags:
+  - CCE-82065-4
+  - DISA-STIG-RHEL-08-040127
+  - NIST-800-53-AC-6
+  - NIST-800-53-AC-6(1)
+  - NIST-800-53-CM-6(a)
+  - NIST-800-53-CM-7(a)
+  - NIST-800-53-CM-7(b)
+  - NIST-800-53-MP-7
+  - configure_strategy
+  - high_disruption
+  - low_complexity
+  - medium_severity
+  - mount_option_var_log_nosuid
+  - no_reboot_needed
+

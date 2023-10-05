@@ -1,0 +1,28 @@
+- name: 'Add nosuid Option to /var/tmp: Ensure /var/tmp is mounted with nosuid option'
+  mount:
+    path: /var/tmp
+    src: '{{ mount_info.source }}'
+    opts: '{{ mount_info.options }}'
+    state: mounted
+    fstype: '{{ mount_info.fstype }}'
+  when:
+  - DISA_STIG_RHEL_08_040133 | bool
+  - configure_strategy | bool
+  - high_disruption | bool
+  - low_complexity | bool
+  - medium_severity | bool
+  - mount_option_var_tmp_nosuid | bool
+  - no_reboot_needed | bool
+  - ( ansible_virtualization_type not in ["docker", "lxc", "openvz", "podman", "container"] and "/var/tmp" in ansible_mounts
+    | map(attribute="mount") | list )
+  - (device_name.stdout is defined and (device_name.stdout | length > 0)) or ("--fstab" | length == 0)
+  tags:
+  - CCE-82154-6
+  - DISA-STIG-RHEL-08-040133
+  - configure_strategy
+  - high_disruption
+  - low_complexity
+  - medium_severity
+  - mount_option_var_tmp_nosuid
+  - no_reboot_needed
+

@@ -1,0 +1,22 @@
+- name: Enable umask option with appropriate value in /etc/sudoers
+  lineinfile:
+    path: /etc/sudoers
+    line: Defaults umask={{ var_sudo_umask }}
+    validate: /usr/sbin/visudo -cf %s
+  when:
+  - low_complexity | bool
+  - low_disruption | bool
+  - medium_severity | bool
+  - no_reboot_needed | bool
+  - restrict_strategy | bool
+  - sudo_add_umask | bool
+  - edit_sudoers_umask_option is defined and not edit_sudoers_umask_option.changed
+  tags:
+  - CCE-83860-7
+  - low_complexity
+  - low_disruption
+  - medium_severity
+  - no_reboot_needed
+  - restrict_strategy
+  - sudo_add_umask
+

@@ -1,0 +1,23 @@
+- name: Ensure rsyslog-gnutls is installed
+  package:
+    name: rsyslog-gnutls
+    state: present
+  when:
+  - DISA_STIG_RHEL_08_030680 | bool
+  - enable_strategy | bool
+  - low_complexity | bool
+  - low_disruption | bool
+  - medium_severity | bool
+  - no_reboot_needed | bool
+  - package_rsyslog_gnutls_installed | bool
+  - ansible_virtualization_type not in ["docker", "lxc", "openvz", "podman", "container"]
+  tags:
+  - CCE-82859-0
+  - DISA-STIG-RHEL-08-030680
+  - enable_strategy
+  - low_complexity
+  - low_disruption
+  - medium_severity
+  - no_reboot_needed
+  - package_rsyslog-gnutls_installed
+

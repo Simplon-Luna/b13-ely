@@ -1,0 +1,25 @@
+- name: 'Add nosuid Option to /var: Ensure /var is mounted with nosuid option'
+  mount:
+    path: /var
+    src: '{{ mount_info.source }}'
+    opts: '{{ mount_info.options }}'
+    state: mounted
+    fstype: '{{ mount_info.fstype }}'
+  when:
+  - configure_strategy | bool
+  - high_disruption | bool
+  - low_complexity | bool
+  - mount_option_var_nosuid | bool
+  - no_reboot_needed | bool
+  - unknown_severity | bool
+  - ansible_virtualization_type not in ["docker", "lxc", "openvz", "podman", "container"]
+  - (device_name.stdout is defined and (device_name.stdout | length > 0)) or ("--fstab" | length == 0)
+  tags:
+  - CCE-83383-0
+  - configure_strategy
+  - high_disruption
+  - low_complexity
+  - mount_option_var_nosuid
+  - no_reboot_needed
+  - unknown_severity
+

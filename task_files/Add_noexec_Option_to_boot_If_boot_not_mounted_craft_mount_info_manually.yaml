@@ -1,0 +1,31 @@
+- name: 'Add noexec Option to /boot: If /boot not mounted, craft mount_info manually'
+  set_fact:
+    mount_info: '{{ mount_info|default({})|combine({item.0: item.1}) }}'
+  with_together:
+  - - target
+    - source
+    - fstype
+    - options
+  - - /boot
+    - ''
+    - ''
+    - defaults
+  when:
+  - configure_strategy | bool
+  - high_disruption | bool
+  - low_complexity | bool
+  - medium_severity | bool
+  - mount_option_boot_noexec | bool
+  - no_reboot_needed | bool
+  - ansible_virtualization_type not in ["docker", "lxc", "openvz", "podman", "container"]
+  - ("--fstab" | length == 0)
+  - (device_name.stdout | length == 0)
+  tags:
+  - CCE-83316-0
+  - configure_strategy
+  - high_disruption
+  - low_complexity
+  - medium_severity
+  - mount_option_boot_noexec
+  - no_reboot_needed
+

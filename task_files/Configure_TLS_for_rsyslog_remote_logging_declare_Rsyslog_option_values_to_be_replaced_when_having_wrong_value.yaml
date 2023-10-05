@@ -1,0 +1,27 @@
+- name: 'Configure TLS for rsyslog remote logging: declare Rsyslog option values to be replaced when having wrong value'
+  ansible.builtin.set_fact:
+    rsyslog_values_to_replace_if_wrong_value:
+    - tcp
+    - gtls
+    - '1'
+    - x509/name
+    - 'on'
+  when:
+  - configure_strategy | bool
+  - low_complexity | bool
+  - low_disruption | bool
+  - medium_severity | bool
+  - no_reboot_needed | bool
+  - rsyslog_remote_tls | bool
+  - ansible_virtualization_type not in ["docker", "lxc", "openvz", "podman", "container"]
+  tags:
+  - CCE-82457-3
+  - NIST-800-53-AU-9(3)
+  - NIST-800-53-CM-6(a)
+  - configure_strategy
+  - low_complexity
+  - low_disruption
+  - medium_severity
+  - no_reboot_needed
+  - rsyslog_remote_tls
+

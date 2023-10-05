@@ -1,0 +1,33 @@
+- name: Add watch rule for /etc/selinux/ in /etc/audit/audit.rules
+  lineinfile:
+    line: -w /etc/selinux/ -p wa -k MAC-policy
+    state: present
+    dest: /etc/audit/audit.rules
+    create: true
+    mode: '0640'
+  when:
+  - audit_rules_mac_modification | bool
+  - low_complexity | bool
+  - low_disruption | bool
+  - medium_severity | bool
+  - reboot_required | bool
+  - restrict_strategy | bool
+  - '"audit" in ansible_facts.packages'
+  - ansible_virtualization_type not in ["docker", "lxc", "openvz", "podman", "container"]
+  - find_existing_watch_audit_rules.matched is defined and find_existing_watch_audit_rules.matched == 0
+  tags:
+  - CCE-80721-4
+  - CJIS-5.4.1.1
+  - NIST-800-171-3.1.8
+  - NIST-800-53-AU-12(c)
+  - NIST-800-53-AU-2(d)
+  - NIST-800-53-CM-6(a)
+  - PCI-DSS-Req-10.5.5
+  - PCI-DSSv4-10.3.4
+  - audit_rules_mac_modification
+  - low_complexity
+  - low_disruption
+  - medium_severity
+  - reboot_required
+  - restrict_strategy
+

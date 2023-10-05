@@ -1,0 +1,33 @@
+- name: Configure cron.daily if not already
+  block:
+  - name: Add shebang
+    lineinfile:
+      path: /etc/cron.daily/logrotate
+      line: '#!/bin/sh'
+      insertbefore: BOF
+      create: true
+  - name: Add logrotate call
+    lineinfile:
+      path: /etc/cron.daily/logrotate
+      line: /usr/sbin/logrotate /etc/logrotate.conf
+      regexp: ^[\s]*/usr/sbin/logrotate[\s\S]*/etc/logrotate.conf$
+  when:
+  - configure_strategy | bool
+  - ensure_logrotate_activated | bool
+  - low_complexity | bool
+  - low_disruption | bool
+  - medium_severity | bool
+  - no_reboot_needed | bool
+  - ansible_virtualization_type not in ["docker", "lxc", "openvz", "podman", "container"]
+  tags:
+  - CCE-80794-1
+  - NIST-800-53-CM-6(a)
+  - PCI-DSS-Req-10.7
+  - PCI-DSSv4-10.5.1
+  - configure_strategy
+  - ensure_logrotate_activated
+  - low_complexity
+  - low_disruption
+  - medium_severity
+  - no_reboot_needed
+

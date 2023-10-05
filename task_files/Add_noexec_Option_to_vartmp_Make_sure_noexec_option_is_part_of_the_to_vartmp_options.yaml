@@ -1,0 +1,24 @@
+- name: 'Add noexec Option to /var/tmp: Make sure noexec option is part of the to /var/tmp options'
+  set_fact:
+    mount_info: '{{ mount_info | combine( {''options'':''''~mount_info.options~'',noexec'' }) }}'
+  when:
+  - DISA_STIG_RHEL_08_040134 | bool
+  - configure_strategy | bool
+  - high_disruption | bool
+  - low_complexity | bool
+  - medium_severity | bool
+  - mount_option_var_tmp_noexec | bool
+  - no_reboot_needed | bool
+  - ( ansible_virtualization_type not in ["docker", "lxc", "openvz", "podman", "container"] and "/var/tmp" in ansible_mounts
+    | map(attribute="mount") | list )
+  - mount_info is defined and "noexec" not in mount_info.options
+  tags:
+  - CCE-82151-2
+  - DISA-STIG-RHEL-08-040134
+  - configure_strategy
+  - high_disruption
+  - low_complexity
+  - medium_severity
+  - mount_option_var_tmp_noexec
+  - no_reboot_needed
+

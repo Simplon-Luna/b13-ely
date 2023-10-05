@@ -1,0 +1,24 @@
+- name: 'Add noexec Option to /home: Make sure noexec option is part of the to /home options'
+  set_fact:
+    mount_info: '{{ mount_info | combine( {''options'':''''~mount_info.options~'',noexec'' }) }}'
+  when:
+  - DISA_STIG_RHEL_08_010590 | bool
+  - configure_strategy | bool
+  - high_disruption | bool
+  - low_complexity | bool
+  - medium_severity | bool
+  - mount_option_home_noexec | bool
+  - no_reboot_needed | bool
+  - ansible_virtualization_type not in ["docker", "lxc", "openvz", "podman", "container"]
+  - mount_info is defined and "noexec" not in mount_info.options
+  tags:
+  - CCE-83328-5
+  - DISA-STIG-RHEL-08-010590
+  - NIST-800-53-CM-6(b)
+  - configure_strategy
+  - high_disruption
+  - low_complexity
+  - medium_severity
+  - mount_option_home_noexec
+  - no_reboot_needed
+

@@ -1,0 +1,23 @@
+- name: Ensure sudo is installed
+  package:
+    name: sudo
+    state: present
+  when:
+  - enable_strategy | bool
+  - low_complexity | bool
+  - low_disruption | bool
+  - medium_severity | bool
+  - no_reboot_needed | bool
+  - package_sudo_installed | bool
+  - ansible_virtualization_type not in ["docker", "lxc", "openvz", "podman", "container"]
+  tags:
+  - CCE-82214-8
+  - NIST-800-53-CM-6(a)
+  - PCI-DSSv4-10.2.1.5
+  - enable_strategy
+  - low_complexity
+  - low_disruption
+  - medium_severity
+  - no_reboot_needed
+  - package_sudo_installed
+

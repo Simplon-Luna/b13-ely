@@ -1,0 +1,22 @@
+- name: 'Add noexec Option to /var: Make sure noexec option is part of the to /var options'
+  set_fact:
+    mount_info: '{{ mount_info | combine( {''options'':''''~mount_info.options~'',noexec'' }) }}'
+  when:
+  - configure_strategy | bool
+  - high_disruption | bool
+  - low_complexity | bool
+  - medium_severity | bool
+  - mount_option_var_noexec | bool
+  - no_reboot_needed | bool
+  - ( ansible_virtualization_type not in ["docker", "lxc", "openvz", "podman", "container"] and "/var" in ansible_mounts |
+    map(attribute="mount") | list )
+  - mount_info is defined and "noexec" not in mount_info.options
+  tags:
+  - CCE-83330-1
+  - configure_strategy
+  - high_disruption
+  - low_complexity
+  - medium_severity
+  - mount_option_var_noexec
+  - no_reboot_needed
+

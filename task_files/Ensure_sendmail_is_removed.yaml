@@ -1,0 +1,26 @@
+- name: Ensure sendmail is removed
+  package:
+    name: sendmail
+    state: absent
+  when:
+  - DISA_STIG_RHEL_08_040002 | bool
+  - disable_strategy | bool
+  - low_complexity | bool
+  - low_disruption | bool
+  - medium_severity | bool
+  - no_reboot_needed | bool
+  - package_sendmail_removed | bool
+  - ansible_virtualization_type not in ["docker", "lxc", "openvz", "podman", "container"]
+  tags:
+  - CCE-81039-0
+  - DISA-STIG-RHEL-08-040002
+  - NIST-800-53-CM-6(a)
+  - NIST-800-53-CM-7(a)
+  - NIST-800-53-CM-7(b)
+  - disable_strategy
+  - low_complexity
+  - low_disruption
+  - medium_severity
+  - no_reboot_needed
+  - package_sendmail_removed
+

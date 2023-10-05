@@ -1,0 +1,21 @@
+- name: 'Add noexec Option to /boot: Make sure noexec option is part of the to /boot options'
+  set_fact:
+    mount_info: '{{ mount_info | combine( {''options'':''''~mount_info.options~'',noexec'' }) }}'
+  when:
+  - configure_strategy | bool
+  - high_disruption | bool
+  - low_complexity | bool
+  - medium_severity | bool
+  - mount_option_boot_noexec | bool
+  - no_reboot_needed | bool
+  - ansible_virtualization_type not in ["docker", "lxc", "openvz", "podman", "container"]
+  - mount_info is defined and "noexec" not in mount_info.options
+  tags:
+  - CCE-83316-0
+  - configure_strategy
+  - high_disruption
+  - low_complexity
+  - medium_severity
+  - mount_option_boot_noexec
+  - no_reboot_needed
+

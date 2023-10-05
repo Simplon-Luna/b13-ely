@@ -1,0 +1,32 @@
+- name: Set architecture for audit lchown tasks
+  set_fact:
+    audit_arch: b64
+  when:
+  - DISA_STIG_RHEL_08_030480 | bool
+  - audit_rules_dac_modification_lchown | bool
+  - low_complexity | bool
+  - low_disruption | bool
+  - medium_severity | bool
+  - reboot_required | bool
+  - restrict_strategy | bool
+  - '"audit" in ansible_facts.packages'
+  - ansible_virtualization_type not in ["docker", "lxc", "openvz", "podman", "container"]
+  - ansible_architecture == "aarch64" or ansible_architecture == "ppc64" or ansible_architecture == "ppc64le" or ansible_architecture
+    == "s390x" or ansible_architecture == "x86_64"
+  tags:
+  - CCE-80693-5
+  - CJIS-5.4.1.1
+  - DISA-STIG-RHEL-08-030480
+  - NIST-800-171-3.1.7
+  - NIST-800-53-AU-12(c)
+  - NIST-800-53-AU-2(d)
+  - NIST-800-53-CM-6(a)
+  - PCI-DSS-Req-10.5.5
+  - PCI-DSSv4-10.3.4
+  - audit_rules_dac_modification_lchown
+  - low_complexity
+  - low_disruption
+  - medium_severity
+  - reboot_required
+  - restrict_strategy
+

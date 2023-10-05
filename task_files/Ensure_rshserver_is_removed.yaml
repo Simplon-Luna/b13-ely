@@ -1,0 +1,26 @@
+- name: Ensure rsh-server is removed
+  package:
+    name: rsh-server
+    state: absent
+  tags:
+  - CCE-82184-3
+  - DISA-STIG-RHEL-08-040010
+  - NIST-800-53-CM-6(a)
+  - NIST-800-53-CM-7(a)
+  - NIST-800-53-CM-7(b)
+  - NIST-800-53-IA-5(1)(c)
+  - disable_strategy
+  - high_severity
+  - low_complexity
+  - low_disruption
+  - no_reboot_needed
+  - package_rsh-server_removed
+  when:
+  - DISA_STIG_RHEL_08_040010 | bool
+  - disable_strategy | bool
+  - high_severity | bool
+  - low_complexity | bool
+  - low_disruption | bool
+  - no_reboot_needed | bool
+  - package_rsh_server_removed | bool
+
