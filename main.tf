@@ -58,7 +58,7 @@ variable "location" {
 resource "azurerm_linux_virtual_machine" "red-vm" {
   name                = "${var.vm_name}"
   location            = "${var.location}"
-  resource_group_name = "${azurerm_resource_group.rg.name}"
+  resource_group_name = module.azure_infra.rg_name.name
   network_interface_ids = [module.azure_infra.nic_id.id]
 
   size                = "${var.vm_size}"
