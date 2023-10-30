@@ -38,19 +38,19 @@ module "azure_infra" {
 
 variable "vm_name"{
   description = "The VM's name"
-  default = "ely13-vm"
+  default     = "ely13-vm"
   type        = string
 }
 
 variable "vm_size" {
   description = "The VM size for the nodes in AKS cluster"
-  default = "Standard_DS2_v2"
+  default     = Standard_DS2_v2
   type        = string
 }
 
 variable "location" {
   description = "The Azure Region in which resources will be created"
-  default = "francecentral"
+  default     = "francecentral"
   type        = string
 }
 
