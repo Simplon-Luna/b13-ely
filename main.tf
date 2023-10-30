@@ -35,3 +35,53 @@ module "azure_infra" {
   nsgRule_direction2                  = "Outbound"
   nsgRule_destination_port_range2     = "*"
 }
+
+variable "prefix" {
+  default ="b13-ely"
+}
+
+variable "vm_name"{
+  description = "The VM's name"
+  default = "ely13-vm"
+  type        = string
+}
+
+variable "vm_size" {
+  description = "The VM size for the nodes in AKS cluster"
+  type        = string
+}
+
+variable "location" {
+  description = "The Azure Region in which resources will be created"
+  default = "francecentral"
+  type        = string
+}
+
+# Creation VM
+resource "azurerm_linux_virtual_machine" "red-vm" {
+  name                = "${var.vm_name}"
+  location            = "${var.location}"
+  resource_group_name = "${azurerm_resource_group.rg.name}"
+  network_interface_ids = [module.azure_infra.nic_id.id]
+
+  size                = "${var.vm_size}"
+  admin_username      = "adminuser"
+  admin_ssh_key {
+    username   = "adminuser"
+    public_key = file("~/git/b13-ely/.ssh/ssh.pub")
+  }
+
+  os_disk {
+    caching              = "ReadWrite"
+    storage_account_type = "Premium_LRS"
+  }
+
+  source_image_reference {
+    publisher = "RedHat"
+    offer     = "RHEL"
+    sku       = "88-gen2"
+    version   = "latest"
+  }
+
+  computer_name  = "${var.vm_name}"
+ }
