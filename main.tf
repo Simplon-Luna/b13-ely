@@ -7,7 +7,7 @@ module "azure_infra" {
 
   prefix                              = "b13-ely"
   resource_group_name                 = "${var.prefix}-rg"
-  location                            = "westeurope"
+  location                            = "francecentral"
   vnet_name                           = "${var.prefix}-VNet"
   address_space                       = ["10.0.0.0/16"]
   priv_subnet_name                    = "${var.prefix}-Priv_Subnet"
