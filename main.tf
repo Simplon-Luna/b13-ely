@@ -36,10 +36,6 @@ module "azure_infra" {
   nsgRule_destination_port_range2     = "*"
 }
 
-variable "prefix" {
-  default ="b13-ely"
-}
-
 variable "vm_name"{
   description = "The VM's name"
   default = "ely13-vm"
