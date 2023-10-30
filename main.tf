@@ -82,3 +82,4 @@ resource "azurerm_linux_virtual_machine" "red-vm" {
 
   computer_name  = "${var.vm_name}"
  }
+
