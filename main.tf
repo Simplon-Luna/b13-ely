@@ -44,6 +44,7 @@ variable "vm_name"{
 
 variable "vm_size" {
   description = "The VM size for the nodes in AKS cluster"
+  default = "Standard_DS2_v2"
   type        = string
 }
 
