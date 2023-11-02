@@ -16,5 +16,7 @@
 			"path": "../Brief_13_bis"
 		}
 	],
-	"settings": {}
+	"settings": {
+		"liveServer.settings.multiRootWorkspaceName": "b13-ely"
+	}
 }

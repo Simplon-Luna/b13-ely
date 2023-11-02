@@ -81,5 +81,10 @@ resource "azurerm_linux_virtual_machine" "red-vm" {
   }
 
   computer_name  = "${var.vm_name}"
+  provisioner "local-exec" {
+  command = "ansible-galaxy install -r requirements.yaml"
+  }
+  provisioner "local-exec" {
+  command = "ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook playbook.yaml -i azure_rm.yaml"
+  }
  }
-
