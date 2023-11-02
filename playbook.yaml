@@ -3,4 +3,6 @@
   remote_user: adminuser
   become: true
   roles:
+    - role : ./roles/install-scap
     - role : ./roles/redHat_official_minAnssi
+    - role : ./roles/scan-scap
