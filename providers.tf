@@ -9,7 +9,6 @@ terraform {
       source  = "ansible/ansible"
     }
   }
-  }
 }
 
 provider "azurerm" {
