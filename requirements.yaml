@@ -2,5 +2,3 @@ collections:
   - name: azure.azcollection
     type: galaxy
 
-# roles:
-#   - name: RedHatOfficial.rhel8_anssi_bp28_minimal # name of the role to deploy

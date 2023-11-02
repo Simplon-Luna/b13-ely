@@ -7,6 +7,6 @@ include_vm_resource_groups:
 # Include the resource group containing the VM
   - b13-ely-rg
 
-conditionnal_groups:
+conditional_groups:
 # Conditionally group VMs based on computer name
   generatedVm: "'ely13-vm' in computer_name"
