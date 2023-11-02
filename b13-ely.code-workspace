@@ -14,6 +14,10 @@
 		{
 			"name": "Brief_13_bis",
 			"path": "../Brief_13_bis"
+		},
+		{
+			"name": "AKS-promgrafana",
+			"path": "../Paul/AKS-promgrafana"
 		}
 	],
 	"settings": {
