@@ -6,7 +6,7 @@ module "azure_infra" {
   source = "git::https://github.com/Simplon-Luna/b13-ely-2"
 
   prefix                              = "b13-ely"
-  resource_group_name                 = "${var.prefix}-rg"
+  resource_group_name                 = "${var.prefix}"
   location                            = "francecentral"
   vnet_name                           = "${var.prefix}-VNet"
   address_space                       = ["10.0.0.0/16"]
