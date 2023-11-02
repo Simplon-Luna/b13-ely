@@ -1,0 +1,10 @@
+- name: Run roles and SCAP audit
+  hosts: all
+  remote_user: adminuser
+  become: true
+  roles:
+    - role : ./roles/install-scap
+    - role : ./roles/redHat_official_minAnssi
+    - role : ./roles/scan-scap
+  vars:
+    ansible_ssh_private_key_file: ~/.ssh/lunas_priv2
