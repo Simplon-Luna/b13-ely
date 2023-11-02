@@ -4,6 +4,11 @@ terraform {
       source = "hashicorp/azurerm"
       version = ">3.0"
     }
+    ansible = {
+      version = "~> 1.1.0"
+      source  = "ansible/ansible"
+    }
+  }
   }
 }
 
