@@ -1,0 +1,3 @@
+- name: Add ansible user PWD and allowing NOPASSWD for scan-scap
+  ansible.builtin.shell:
+          cmd:
