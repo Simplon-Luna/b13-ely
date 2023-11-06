@@ -8,19 +8,12 @@
 			"path": "../b13-ely-2"
 		},
 		{
-			"name": "Brief_13",
-			"path": "../Brief_13"
-		},
-		{
-			"name": "Brief_13_bis",
-			"path": "../Brief_13_bis"
-		},
-		{
 			"name": "AKS-promgrafana",
 			"path": "../Paul/AKS-promgrafana"
 		}
 	],
 	"settings": {
-		"liveServer.settings.multiRootWorkspaceName": "AKS-promgrafana"
+		"liveServer.settings.multiRootWorkspaceName": "AKS-promgrafana",
+		"ansible.python.interpreterPath": "c:\\outils\\Python311\\python.exe"
 	}
 }
