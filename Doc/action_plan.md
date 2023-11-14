@@ -43,12 +43,9 @@
 
 ### **Scrum quotidien**
 
-Scrum Master = Me, myself and I
 Daily personnal reactions with reports and designations of first tasks for the day.
 
 Frequent meeting with other coworkers to study solutions to encountered problems together.
-
-[scrums](https://github.com/simplon-lerouxDunvael/Brief_7/blob/main/Plans_et_demarches/Scrum.md)
 
 [&#8679;](#top)
 
@@ -56,7 +53,7 @@ Frequent meeting with other coworkers to study solutions to encountered problems
 
 #### **doc reading**
 
-Researches and reading of documentations to determine the needed prerequisites, functionnalities and softwares to complete the different tasks of Brief 10.
+Researches and reading of documentations to determine the needed prerequisites, functionnalities and softwares to complete the different tasks of Brief 13.
 
 [&#8679;](#top)  
 
